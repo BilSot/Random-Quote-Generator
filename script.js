@@ -6,6 +6,8 @@ project 1 - A Random Quote Generator
 // For assistance: 
   // Check the "Project Resources" section of the project instructions
   // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
+
+//on page load, a random quote is showed on the page by calling the printQuote function
 document.addEventListener('DOMContentLoaded', (event) => { printQuote(); });
 setInterval(function() {
     printQuote();
@@ -51,6 +53,7 @@ quotes = [
     }
 ];
 
+//array with different colors to be used as the background color of the page
 var bodyHTMLColors = [
     'rgb(58, 193, 98)',
     'rgb(193, 58, 101)',
@@ -62,7 +65,10 @@ var bodyHTMLColors = [
 
 
 /***
- * `getRandomQuote` function
+ * Retrieves a quote from the array, from a random selected position and guarantees that each time a different quote will be shown
+ * @param {Array} quotes
+ * @return {Object} a quote from the array from a specific position
+ *
 ***/
 var previousPosition = 0;
 const getRandomQuote = (quotes) => {
@@ -70,18 +76,27 @@ const getRandomQuote = (quotes) => {
     while(previousPosition == position){
         position = getRandomNumber(quotes.length);
     }
-    let color = bodyHTMLColors[position];
-    applyBckgColor(color);
     previousPosition = position;
+    let color = bodyHTMLColors[position];
+    applyBackgroundColor(color);
     return quotes[position];
 }
 
+/***
+ * Randomly selects a number in a given range
+ * @param {Number} number
+ * @return {Number} a random number between 0 and @param number
+***/
 const getRandomNumber = number => Math.floor(Math.random() * number);
 
-const applyBckgColor = color => document.body.style.backgroundColor = color;
+/***
+ * Applies a background color to the HTML page
+ * @param {String} color
+ ***/
+const applyBackgroundColor = color => document.body.style.backgroundColor = color;
 
 /***
- * `printQuote` function
+ * Constructs the HTML layout of the quote and displays the information of the quote on the page
 ***/
 const printQuote = () => {
     let quote = getRandomQuote(quotes);
